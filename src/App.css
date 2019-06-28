@@ -12,11 +12,17 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  margin-top: -180px;
+  margin-top: -80px;
 }
 #mainBody{
   background-color: #282c34;
 }
 .App-link {
   color: #61dafb;
+}
+
+#resultSection{
+  width: 310px;
+  height: 310px;
+  overflow: scroll;
 }

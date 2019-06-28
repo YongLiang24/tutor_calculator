@@ -9,8 +9,9 @@ class ResultLog extends Component{
       Result Logs:
       <ul>
       {
-        this.props.resultLog.map((result, key) =>{
-          return <li key={key}>result: {result}</li>
+        //slice to limit 10 results display
+        this.props.resultLog.slice(0,10).map((result, key) =>{
+          return <div key={key}>result: {result}</div>
         })
       }
       </ul>
