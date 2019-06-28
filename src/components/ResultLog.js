@@ -10,7 +10,7 @@ class ResultLog extends Component{
       <ul>
       {
         //slice to limit 10 results display
-        this.props.resultLog.slice(0,10).map((result, key) =>{
+        this.props.resultLog.reverse().slice(0,10).map((result, key) =>{
           return <div key={key}>result: {result}</div>
         })
       }

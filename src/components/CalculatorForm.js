@@ -17,21 +17,21 @@ class CalculatorForm extends Component{
       switch (ev.target.name){
         case "addition":
         const additionArray = this.state.resultArray.slice()//new copy
-        additionArray.unshift(`${this.state.firstValue}+ ${this.state.secondValue} = ${this.state.firstValue + this.state.secondValue}`)
+        additionArray.push(`${this.state.firstValue}+ ${this.state.secondValue} = ${this.state.firstValue + this.state.secondValue}`)
         this.setState({resultArray: additionArray})
         //console.log(this.state.resultArray)
         break;
 
         case "subtraction":
         const subtractionArray = this.state.resultArray.slice()
-        subtractionArray.unshift(`${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`)
+        subtractionArray.push(`${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`)
         this.setState({resultArray: subtractionArray})
         //console.log(this.state.resultArray)
         break;
 
         case "multiplication":
         const multiplicationArray = this.state.resultArray.slice()//new copy
-        multiplicationArray.unshift(`${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`)
+        multiplicationArray.push(`${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`)
         this.setState({resultArray: multiplicationArray})
         //console.log(this.state.resultArray)
         break;
@@ -39,7 +39,7 @@ class CalculatorForm extends Component{
         case "division":
         const divisionArray = this.state.resultArray.slice()//new copy
         const resultDecimal = (this.state.firstValue / this.state.secondValue).toFixed(3)
-        divisionArray.unshift(`${this.state.firstValue} \xF7 ${this.state.secondValue} = ${resultDecimal}`)
+        divisionArray.push(`${this.state.firstValue} \xF7 ${this.state.secondValue} = ${resultDecimal}`)
         this.setState({resultArray: divisionArray})
         //console.log(this.state.resultArray)
         break;
