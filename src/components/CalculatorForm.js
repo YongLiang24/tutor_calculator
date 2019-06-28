@@ -10,52 +10,58 @@ class CalculatorForm extends Component{
   }
 
   handleButton = (ev)=>{
-    switch (ev.target.name){
-      case "addition":
-      const additionArray = this.state.resultArray.slice()//new copy
-      additionArray.unshift(`${this.state.firstValue}+ ${this.state.secondValue} = ${this.state.firstValue + this.state.secondValue}`)
-      this.setState({resultArray: additionArray})
-      //console.log(this.state.resultArray)
-      break;
-
-      case "subtraction":
-      const subtractionArray = this.state.resultArray.slice()
-      subtractionArray.unshift(`${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`)
-      this.setState({resultArray: subtractionArray})
-      //console.log(this.state.resultArray)
-      break;
-
-      case "multiplication":
-      const multiplicationArray = this.state.resultArray.slice()//new copy
-      multiplicationArray.unshift(`${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`)
-      this.setState({resultArray: multiplicationArray})
-      //console.log(this.state.resultArray)
-      break;
-
-      case "division":
-      const divisionArray = this.state.resultArray.slice()//new copy
-      const resultDecimal = (this.state.firstValue / this.state.secondValue).toFixed(3)
-      divisionArray.unshift(`${this.state.firstValue} \xF7 ${this.state.secondValue} = ${resultDecimal}`)
-      this.setState({resultArray: divisionArray})
-      //console.log(this.state.resultArray)
-      break;
-
-      default: break
+    if(!this.state.firstValue || !this.state.secondValue){
+      alert("please enter a valid number for both fields")
     }
+    else{
+      switch (ev.target.name){
+        case "addition":
+        const additionArray = this.state.resultArray.slice()//new copy
+        additionArray.unshift(`${this.state.firstValue}+ ${this.state.secondValue} = ${this.state.firstValue + this.state.secondValue}`)
+        this.setState({resultArray: additionArray})
+        //console.log(this.state.resultArray)
+        break;
+
+        case "subtraction":
+        const subtractionArray = this.state.resultArray.slice()
+        subtractionArray.unshift(`${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`)
+        this.setState({resultArray: subtractionArray})
+        //console.log(this.state.resultArray)
+        break;
+
+        case "multiplication":
+        const multiplicationArray = this.state.resultArray.slice()//new copy
+        multiplicationArray.unshift(`${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`)
+        this.setState({resultArray: multiplicationArray})
+        //console.log(this.state.resultArray)
+        break;
+
+        case "division":
+        const divisionArray = this.state.resultArray.slice()//new copy
+        const resultDecimal = (this.state.firstValue / this.state.secondValue).toFixed(3)
+        divisionArray.unshift(`${this.state.firstValue} \xF7 ${this.state.secondValue} = ${resultDecimal}`)
+        this.setState({resultArray: divisionArray})
+        //console.log(this.state.resultArray)
+        break;
+
+        default: break
+      }
+    }
+
   }
   render(){
     return(
       <div>
       <h1>Tutor Calculator</h1>
-      Input 01: <input type="number" placeholder="first number" name="firstValue"
-      onChange={this.handleInput} value={this.state.firstValue}/><br/>
-      Input 02: <input type="number" placeholder="second number" name="secondValue"
-      onChange={this.handleInput} value={this.state.secondValue}/> <br/>
+      <input type="number" placeholder="first number" name="firstValue"
+      onChange={this.handleInput} value={this.state.firstValue} required/><br/>
+      <input type="number" placeholder="second number" name="secondValue"
+      onChange={this.handleInput} value={this.state.secondValue} required/> <br/><br/>
 
-      <button onClick={this.handleButton} name="addition">+</button>{" "}
-      <button onClick={this.handleButton} name="subtraction">-</button>{" "}
-      <button onClick={this.handleButton} name="multiplication">x</button>{" "}
-      <button onClick={this.handleButton} name="division">/</button>
+      <button onClick={this.handleButton} name="addition" className="CB">+</button>{" "}
+      <button onClick={this.handleButton} name="subtraction" className="CB">-</button>{" "}
+      <button onClick={this.handleButton} name="multiplication" className="CB">x</button>{" "}
+      <button onClick={this.handleButton} name="division" className="CB">/</button>
       <hr/>
       <div id="resultSection" >
       <ResultLog resultLog={this.state.resultArray} />
