@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ResultLog from "./ResultLog";
 
 class CalculatorForm extends Component{
 
@@ -48,9 +49,9 @@ class CalculatorForm extends Component{
     return(
       <div>
       <h1>Tutor Calculator</h1>
+
       Input 01: <input type="number" placeholder="first number" name="firstValue"
       onChange={this.handleInput} value={this.state.firstValue}/><br/>
-
       Input 02: <input type="number" placeholder="second number" name="secondValue"
       onChange={this.handleInput} value={this.state.secondValue}/> <br/>
 
@@ -58,6 +59,11 @@ class CalculatorForm extends Component{
       <button onClick={this.handleButton} name="subtraction">-</button>{" "}
       <button onClick={this.handleButton} name="multiplication">x</button>{" "}
       <button onClick={this.handleButton} name="division">/</button>
+      <hr/>
+      <ResultLog resultLog={this.state.resultArray} />
+
+
+
       </div>
     )
   }

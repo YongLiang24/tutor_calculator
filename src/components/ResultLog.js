@@ -8,7 +8,11 @@ class ResultLog extends Component{
       <div>
       Result Logs:
       <ul>
-      <li> 5</li>
+      {
+        this.props.resultLog.map((result, key) =>{
+          return <li key={key}>result: {result}</li>
+        })
+      }
       </ul>
       </div>
     )
