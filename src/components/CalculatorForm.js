@@ -13,28 +13,29 @@ class CalculatorForm extends Component{
     switch (ev.target.name){
       case "addition":
       const additionArray = this.state.resultArray.slice()//new copy
-      additionArray.unshift(this.state.firstValue + this.state.secondValue)
+      additionArray.unshift(`${this.state.firstValue}+ ${this.state.secondValue} = ${this.state.firstValue + this.state.secondValue}`)
       this.setState({resultArray: additionArray})
       //console.log(this.state.resultArray)
       break;
 
       case "subtraction":
       const subtractionArray = this.state.resultArray.slice()
-      subtractionArray.unshift(this.state.firstValue - this.state.secondValue)
+      subtractionArray.unshift(`${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`)
       this.setState({resultArray: subtractionArray})
       //console.log(this.state.resultArray)
       break;
 
       case "multiplication":
       const multiplicationArray = this.state.resultArray.slice()//new copy
-      multiplicationArray.unshift(this.state.firstValue * this.state.secondValue)
+      multiplicationArray.unshift(`${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`)
       this.setState({resultArray: multiplicationArray})
       //console.log(this.state.resultArray)
       break;
 
       case "division":
       const divisionArray = this.state.resultArray.slice()//new copy
-      divisionArray.unshift(this.state.firstValue / this.state.secondValue)
+      const resultDecimal = (this.state.firstValue / this.state.secondValue).toFixed(3)
+      divisionArray.unshift(`${this.state.firstValue} \xF7 ${this.state.secondValue} = ${resultDecimal}`)
       this.setState({resultArray: divisionArray})
       //console.log(this.state.resultArray)
       break;
