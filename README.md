@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Please visit: https://yongliang24.github.io/tutor_calculator/
 
 ## Available Scripts
 
