@@ -2,93 +2,97 @@ import React, {Component} from 'react';
 import ResultLog from "./ResultLog";
 
 class CalculatorForm extends Component{
+//set initial states
+  state={firstValue: "", secondValue: "", resultArray: [], divisionSymbol: "\xF7"}
 
-  state={firstValue: "", secondValue: "", resultArray: [], divisionSymbol: "\xF7",
-arrayClear: true}
+//lifecycle method runs after components are mounted
+  componentDidMount(){
+    //setInterval call back will call liveUpdateLog every 2 seconds to update data from database
+    setInterval(this.liveUpdateLog, 2000)
+  }
 
+//this is a live update helper method
+liveUpdateLog = () =>{
+  fetch("http://localhost:3000/logs")
+  .then(resp => resp.json())
+  .then(json => {
+    this.setState({resultArray: json[0].results})
+  })
+}
 
+//this method updates the input values
   handleInput = (ev)=>{
     this.setState({[ev.target.name]: parseFloat(ev.target.value)})
   }
 
+//this is a helper method that updates the backend results
+  updateLog = (results) =>{
+    fetch('http://localhost:3000/logs/1',{
+    method: 'PATCH',
+    headers:{'Content-Type': 'application/json',
+      Accept: 'application/json'},
+      body: JSON.stringify({results} )
+    })
+    .then(resp => resp.json())
+    .then(json =>{
+      //update the resultArray state
+      this.setState({resultArray: json.results})
+    })
+  }
+
+//this method calculates the two inputs depending on the button clicked
   handleButton = (ev)=>{
     let results ="";
+    //validate the controlled inputs
     if(!this.state.firstValue || !this.state.secondValue){
       alert("please enter a valid number.")
     }
     else{
       switch (ev.target.name){
         case "addition":
+        //create a string of the result as string
         results = `${this.state.firstValue}+ ${this.state.secondValue} = ${this.state.firstValue + this.state.secondValue}`;
-        //fetch & update the backend results
-        fetch('http://localhost:3000/logs/1',{
-        method: 'PATCH',
-        headers:{'Content-Type': 'application/json',
-          Accept: 'application/json'},
-          body: JSON.stringify({results} )
-        })
-        .then(resp => resp.json())
-        .then(json =>{
-          this.setState({resultArray: json.results})
-        })
+        //call the update result helper method
+        this.updateLog(results)
         break;
 
         case "subtraction":
-        results = `${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`
-        fetch('http://localhost:3000/logs/1',{
-        method: 'PATCH',
-        headers:{'Content-Type': 'application/json',
-          Accept: 'application/json'},
-          body: JSON.stringify({results} )
-        })
-        .then(resp => resp.json())
-        .then(json =>{
-          this.setState({resultArray: json.results})
-        })
+        results = `${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`;
+        //call the update result helper method
+        this.updateLog(results)
         break;
 
         case "multiplication":
-        results = `${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`
-        fetch('http://localhost:3000/logs/1',{
-        method: 'PATCH',
-        headers:{'Content-Type': 'application/json',
-          Accept: 'application/json'},
-          body: JSON.stringify({results} )
-        })
-        .then(resp => resp.json())
-        .then(json =>{
-          this.setState({resultArray: json.results})
-        })
+        results = `${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`;
+        //call the update result helper method
+        this.updateLog(results)
         break;
 
         case "division":
-        results = `${this.state.firstValue} \xF7 ${this.state.secondValue} = ${(this.state.firstValue / this.state.secondValue).toFixed(2)}`
-        fetch('http://localhost:3000/logs/1',{
-        method: 'PATCH',
-        headers:{'Content-Type': 'application/json',
-          Accept: 'application/json'},
-          body: JSON.stringify({results} )
-        })
-        .then(resp => resp.json())
-        .then(json =>{
-          this.setState({resultArray: json.results})
-        })
+        results = `${this.state.firstValue} \xF7 ${this.state.secondValue} = ${(this.state.firstValue / this.state.secondValue).toFixed(2)}`;
+        //call the update result helper method
+        this.updateLog(results)
         break;
 
         default: break
       }
     }
   }
-
+//this method empties the log list then update the state.resultArray
   handleClear = ev =>{
-    let isClear = this.state.arrayClear;
+    let isClear = true;
     fetch('http://localhost:3000/logs/1',{
     method: 'PATCH',
     headers:{'Content-Type': 'application/json',
       Accept: 'application/json'},
       body: JSON.stringify({isClear} )
     })
+    .then(resp => resp.json())
+    .then(json =>{
+      this.setState({resultArray: json.results})
+    })
   }
+
   render(){
     return(
       <div>
