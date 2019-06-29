@@ -2,6 +2,14 @@ import React, {Component} from 'react';
 
 class ResultLog extends Component{
 
+  // componentDidMount(){
+  //
+  //   fetch("http://localhost:3000/logs")
+  //   .then(resp => resp.json())
+  //   .then(json=>{
+  //     console.log(json)
+  //   })
+  // }
 
   render(){
     return(

@@ -3,51 +3,91 @@ import ResultLog from "./ResultLog";
 
 class CalculatorForm extends Component{
 
-  state={firstValue: "", secondValue: "", resultArray: []}
+  state={firstValue: "", secondValue: "", resultArray: [], divisionSymbol: "\xF7",
+arrayClear: true}
+
 
   handleInput = (ev)=>{
     this.setState({[ev.target.name]: parseFloat(ev.target.value)})
   }
 
   handleButton = (ev)=>{
+    let results ="";
     if(!this.state.firstValue || !this.state.secondValue){
-      alert("please enter a valid number for both fields")
+      alert("please enter a valid number.")
     }
     else{
       switch (ev.target.name){
         case "addition":
-        const additionArray = this.state.resultArray.slice()//new copy
-        additionArray.push(`${this.state.firstValue}+ ${this.state.secondValue} = ${this.state.firstValue + this.state.secondValue}`)
-        this.setState({resultArray: additionArray})
-        //console.log(this.state.resultArray)
+        results = `${this.state.firstValue}+ ${this.state.secondValue} = ${this.state.firstValue + this.state.secondValue}`;
+        //fetch & update the backend results
+        fetch('http://localhost:3000/logs/1',{
+        method: 'PATCH',
+        headers:{'Content-Type': 'application/json',
+          Accept: 'application/json'},
+          body: JSON.stringify({results} )
+        })
+        .then(resp => resp.json())
+        .then(json =>{
+          this.setState({resultArray: json.results})
+        })
         break;
 
         case "subtraction":
-        const subtractionArray = this.state.resultArray.slice()
-        subtractionArray.push(`${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`)
-        this.setState({resultArray: subtractionArray})
-        //console.log(this.state.resultArray)
+        results = `${this.state.firstValue} - ${this.state.secondValue} = ${this.state.firstValue - this.state.secondValue}`
+        fetch('http://localhost:3000/logs/1',{
+        method: 'PATCH',
+        headers:{'Content-Type': 'application/json',
+          Accept: 'application/json'},
+          body: JSON.stringify({results} )
+        })
+        .then(resp => resp.json())
+        .then(json =>{
+          this.setState({resultArray: json.results})
+        })
         break;
 
         case "multiplication":
-        const multiplicationArray = this.state.resultArray.slice()//new copy
-        multiplicationArray.push(`${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`)
-        this.setState({resultArray: multiplicationArray})
-        //console.log(this.state.resultArray)
+        results = `${this.state.firstValue} x ${this.state.secondValue} = ${this.state.firstValue * this.state.secondValue}`
+        fetch('http://localhost:3000/logs/1',{
+        method: 'PATCH',
+        headers:{'Content-Type': 'application/json',
+          Accept: 'application/json'},
+          body: JSON.stringify({results} )
+        })
+        .then(resp => resp.json())
+        .then(json =>{
+          this.setState({resultArray: json.results})
+        })
         break;
 
         case "division":
-        const divisionArray = this.state.resultArray.slice()//new copy
-        const resultDecimal = (this.state.firstValue / this.state.secondValue).toFixed(3)
-        divisionArray.push(`${this.state.firstValue} \xF7 ${this.state.secondValue} = ${resultDecimal}`)
-        this.setState({resultArray: divisionArray})
-        //console.log(this.state.resultArray)
+        results = `${this.state.firstValue} \xF7 ${this.state.secondValue} = ${(this.state.firstValue / this.state.secondValue).toFixed(2)}`
+        fetch('http://localhost:3000/logs/1',{
+        method: 'PATCH',
+        headers:{'Content-Type': 'application/json',
+          Accept: 'application/json'},
+          body: JSON.stringify({results} )
+        })
+        .then(resp => resp.json())
+        .then(json =>{
+          this.setState({resultArray: json.results})
+        })
         break;
 
         default: break
       }
     }
+  }
 
+  handleClear = ev =>{
+    let isClear = this.state.arrayClear;
+    fetch('http://localhost:3000/logs/1',{
+    method: 'PATCH',
+    headers:{'Content-Type': 'application/json',
+      Accept: 'application/json'},
+      body: JSON.stringify({isClear} )
+    })
   }
   render(){
     return(
@@ -61,8 +101,9 @@ class CalculatorForm extends Component{
       <button onClick={this.handleButton} name="addition" className="CB">+</button>{" "}
       <button onClick={this.handleButton} name="subtraction" className="CB">-</button>{" "}
       <button onClick={this.handleButton} name="multiplication" className="CB">x</button>{" "}
-      <button onClick={this.handleButton} name="division" className="CB">/</button>
+      <button onClick={this.handleButton} name="division" className="CB">{this.state.divisionSymbol}</button>
       <hr/>
+      <button onClick={this.handleClear} name="clearArray">Clear Logs</button>
       <div id="resultSection" >
       <ResultLog resultLog={this.state.resultArray} />
       </div>
