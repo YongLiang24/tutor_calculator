@@ -13,7 +13,7 @@ class CalculatorForm extends Component{
 
 //this is a live update helper method
 liveUpdateLog = () =>{
-  fetch("http://localhost:3000/logs")
+  fetch("https://tutor-calculator.herokuapp.com/logs")
   .then(resp => resp.json())
   .then(json => {
     this.setState({resultArray: json[0].results})
@@ -27,7 +27,7 @@ liveUpdateLog = () =>{
 
 //this is a helper method that updates the backend results
   updateLog = (results) =>{
-    fetch('http://localhost:3000/logs/1',{
+    fetch("https://tutor-calculator.herokuapp.com/logs/1",{
     method: 'PATCH',
     headers:{'Content-Type': 'application/json',
       Accept: 'application/json'},
@@ -81,7 +81,7 @@ liveUpdateLog = () =>{
 //this method empties the log list then update the state.resultArray
   handleClear = ev =>{
     let isClear = true;
-    fetch('http://localhost:3000/logs/1',{
+    fetch("https://tutor-calculator.herokuapp.com/logs/1",{
     method: 'PATCH',
     headers:{'Content-Type': 'application/json',
       Accept: 'application/json'},

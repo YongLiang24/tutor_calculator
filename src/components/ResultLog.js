@@ -3,13 +3,13 @@ import React, {Component} from 'react';
 class ResultLog extends Component{
   componentDidMount(){
     //this checks the database whether the table is empty
-    fetch("http://localhost:3000/logs")
+    fetch("https://tutor-calculator.herokuapp.com/logs")
     .then(resp => resp.json())
     .then(json=>{
     //if the table is empty, then create one object(array) so results can be store there
       if(json.length <1){
 
-        fetch("http://localhost:3000/logs",{
+        fetch("https://tutor-calculator.herokuapp.com/logs",{
           method: "POST"
         })}})
   }
