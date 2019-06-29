@@ -8,7 +8,7 @@ class CalculatorForm extends Component{
 //lifecycle method runs after components are mounted
   componentDidMount(){
     //setInterval call back will call liveUpdateLog every 2 seconds to update data from database
-    setInterval(this.liveUpdateLog, 2000)
+    setInterval(this.liveUpdateLog, 1000)
   }
 
 //this is a live update helper method
